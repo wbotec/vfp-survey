@@ -35,13 +35,24 @@
   .wrap { max-width: 640px; margin: 0 auto; padding: 0 16px; }
 
   /* Kichwa */
-  .masthead { background: var(--page); }
-  .masthead .wrap { padding-top: 24px; padding-bottom: 26px; }
-  .logo { display: block; height: 104px; width: auto; margin: 0 0 20px; }
-  .event { margin: 0 0 6px; font-size: 15px; font-weight: 600; color: #3f7d24; }
-  h1 { margin: 0; font-size: 30px; line-height: 1.15; font-weight: 800; letter-spacing: -0.01em; color: var(--brand-deep); }
-  .intro { margin: 14px 0 0; font-size: 17px; color: var(--muted); }
-  .intro { padding-bottom: 12px; border-bottom: 3px solid var(--green); } /* sawa na mstari wa vichwa vya sehemu */
+  .masthead {
+    position: relative;
+    background: radial-gradient(120% 70% at 50% 0%, #ffffff 0%, var(--page) 70%);
+  }
+  .masthead::before { /* mstari wa rangi za nembo juu kabisa */
+    content: ""; display: block; height: 6px;
+    background: linear-gradient(90deg, var(--brand) 0%, var(--brand) 50%, var(--green) 50%, var(--green) 100%);
+  }
+  .masthead .wrap { padding-top: 28px; padding-bottom: 26px; }
+  .masthead-row { /* nembo kushoto, maandishi kulia */
+    display: flex; align-items: center; gap: 24px;
+    padding-bottom: 20px; border-bottom: 3px solid var(--green); /* sawa na mstari wa vichwa vya sehemu */
+  }
+  .masthead-text { flex: 1; min-width: 0; padding-left: 24px; border-left: 2px solid var(--line); }
+  .logo { display: block; flex: none; height: 96px; width: auto; }
+  .event { margin: 0 0 6px; color: #2f6a17; font-size: 14px; font-weight: 700; letter-spacing: .02em; }
+  h1 { margin: 0; font-size: 27px; line-height: 1.15; font-weight: 800; letter-spacing: -0.01em; color: var(--brand-deep); }
+  .intro { margin: 10px 0 0; font-size: 16px; color: var(--muted); }
   .intro strong { color: var(--ink); display: block; margin-bottom: 4px; }
 
   .privacy {
@@ -145,9 +156,17 @@
   button.secondary { min-height: 48px; padding: 10px 20px; border: 1.5px solid var(--brand); border-radius: 10px; background: transparent; color: var(--brand); font: inherit; font-weight: 600; cursor: pointer; }
 
   [hidden] { display: none !important; }
+  @media (max-width: 560px) {
+    .masthead-row { gap: 14px; align-items: flex-start; }
+    .masthead-text { padding-left: 14px; }
+    .logo { height: 62px; margin-top: 4px; }
+    .event { font-size: 13px; }
+    h1 { font-size: 22px; }
+    .intro { font-size: 15.5px; margin-top: 10px; }
+  }
   @media (max-width: 380px) {
     body { font-size: 16px; }
-    h1 { font-size: 26px; }
+    h1 { font-size: 21px; }
     .nums { gap: 6px; }
   }
   @media (prefers-reduced-motion: reduce) { .bar-fill { transition: none; } }
@@ -157,10 +176,14 @@
 
 <header class="masthead">
   <div class="wrap">
-    <img class="logo" src="logo.png" alt="Victoria Finance" width="115" height="104" onerror="this.remove()">
-    <p class="event" id="event"></p>
-    <h1 id="title"></h1>
-    <p class="intro" id="intro"></p>
+    <div class="masthead-row">
+      <img class="logo" src="logo.png" alt="Victoria Finance" width="106" height="96" onerror="this.remove()">
+      <div class="masthead-text">
+        <p class="event" id="event"></p>
+        <h1 id="title"></h1>
+        <p class="intro" id="intro"></p>
+      </div>
+    </div>
   </div>
 </header>
 
