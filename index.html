@@ -44,6 +44,43 @@
     background: linear-gradient(90deg, var(--brand) 0%, var(--brand) 50%, var(--green) 50%, var(--green) 100%);
   }
   .masthead .wrap { padding-top: 28px; padding-bottom: 26px; }
+
+  /* Mapambo ya Wiki ya Huduma kwa Wateja: puto na vipande vya rangi (confetti) */
+  .festive {
+    position: absolute; inset: 0; overflow: hidden; pointer-events: none;
+    background-image:
+      radial-gradient(circle, rgba(42,109,182,.35) 2px, transparent 2.5px),
+      radial-gradient(circle, rgba(105,181,69,.45) 2px, transparent 2.5px),
+      radial-gradient(circle, rgba(242,183,5,.45) 1.5px, transparent 2px);
+    background-size: 140px 120px, 180px 150px, 110px 130px;
+    background-position: 10px 20px, 70px 60px, 40px 90px;
+  }
+  .masthead .wrap { position: relative; }
+  .balloon { position: absolute; width: 46px; height: 83px; animation: float 7s ease-in-out infinite; transform-origin: 50% 100%; }
+  .balloon.blue   { color: var(--brand); }
+  .balloon.green  { color: var(--green); }
+  .balloon.yellow { color: #f2b705; }
+  .balloon.sky    { color: #6fb3e8; }
+  .b1 { left: calc(50% - 470px); top: 34px; animation-delay: -1s; }
+  .b2 { left: calc(50% - 420px); top: 70px; width: 38px; height: 69px; animation-delay: -3s; }
+  .b3 { left: calc(50% - 510px); top: 96px; width: 34px; height: 61px; animation-delay: -5s; }
+  .b4 { right: calc(50% - 470px); top: 30px; animation-delay: -2s; }
+  .b5 { right: calc(50% - 425px); top: 78px; width: 38px; height: 69px; animation-delay: -4s; }
+  .b6 { right: calc(50% - 515px); top: 100px; width: 34px; height: 61px; animation-delay: -6s; }
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(-4deg); }
+    50%      { transform: translateY(-12px) rotate(4deg); }
+  }
+  @media (max-width: 1000px) { /* simu na skrini ndogo: puto mbili ndogo pembeni juu */
+    .masthead .wrap { padding-top: 62px; }
+    .b1, .b2, .b3 { display: none; }
+    .b4 { right: 44px; top: 8px; width: 30px; height: 54px; }
+    .b5 { right: 14px; top: 18px; width: 26px; height: 47px; }
+    .b6 { right: 76px; top: 20px; width: 24px; height: 43px; }
+  }
+  .done-balloons { display: flex; justify-content: center; align-items: flex-end; gap: 6px; margin-bottom: 8px; }
+  .done-balloons .balloon { position: static; }
+  .done-balloons .balloon:nth-child(2) { width: 54px; height: 97px; }
   .masthead-row { /* nembo kushoto, maandishi kulia */
     display: flex; align-items: center; gap: 24px;
     padding-bottom: 20px; border-bottom: 3px solid var(--green); /* sawa na mstari wa vichwa vya sehemu */
@@ -169,12 +206,27 @@
     h1 { font-size: 21px; }
     .nums { gap: 6px; }
   }
-  @media (prefers-reduced-motion: reduce) { .bar-fill { transition: none; } }
+  @media (prefers-reduced-motion: reduce) { .bar-fill { transition: none; } .balloon { animation: none; } }
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="balloon" viewBox="0 0 40 72">
+    <path d="M20 46c-2 6 3 9 0 14s2 8 0 12" fill="none" stroke="#9aa9b8" stroke-width="1.2"/>
+    <path fill="currentColor" d="M20 2C31 2 38 11 38 21c0 12-10 21-17 23l2 3h-6l2-3C12 42 2 33 2 21 2 11 9 2 20 2z"/>
+    <ellipse cx="12.5" cy="14" rx="3.5" ry="7" fill="#fff" opacity=".35" transform="rotate(25 12.5 14)"/>
+  </symbol>
+</svg>
 
 <header class="masthead">
+  <div class="festive" aria-hidden="true">
+    <svg class="balloon b1 blue"><use href="#balloon"/></svg>
+    <svg class="balloon b2 yellow"><use href="#balloon"/></svg>
+    <svg class="balloon b3 green"><use href="#balloon"/></svg>
+    <svg class="balloon b4 green"><use href="#balloon"/></svg>
+    <svg class="balloon b5 blue"><use href="#balloon"/></svg>
+    <svg class="balloon b6 yellow"><use href="#balloon"/></svg>
+  </div>
   <div class="wrap">
     <div class="masthead-row">
       <img class="logo" src="logo.png" alt="Victoria Finance" width="106" height="96" onerror="this.remove()">
@@ -211,6 +263,7 @@
   </div>
 
   <div id="done-view" class="done" hidden>
+    <div class="done-balloons" aria-hidden="true"><svg class="balloon green"><use href="#balloon"/></svg><svg class="balloon blue"><use href="#balloon"/></svg><svg class="balloon yellow"><use href="#balloon"/></svg></div>
     <div class="done-mark" aria-hidden="true">✓</div>
     <h2 id="thanks" tabindex="-1"></h2>
     <p>Majibu yako yamepokelewa.</p>
