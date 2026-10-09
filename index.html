@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="sw">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#ffffff">
+<title>Utafiti wa Kuridhika kwa Wateja | Victoria Finance</title>
+<meta name="description" content="Wiki ya Huduma kwa Wateja 2026. Tueleze tunachofanya vizuri na mahali tunapopaswa kuboresha.">
+<style>
+  /* Rangi za chapa: badilisha hizi mbili tu ili kuendana na rangi rasmi za Victoria Finance. */
+  :root {
+    /* Rangi zimechukuliwa moja kwa moja kutoka kwenye nembo ya Victoria Finance. */
+    --brand: #2a6db6;        /* bluu ya nembo: vitufe, chaguo lililochaguliwa */
+    --brand-deep: #1f5593;   /* bluu iliyokolea: vichwa */
+    --green: #69b545;        /* kijani cha nembo: mistari na kipimo cha maendeleo */
+    --accent: #14406f;       /* mwonekano wa "focus" */
+    --tint: #e9f1fa;         /* mandharinyuma ya chaguo lililochaguliwa */
+    --page: #f5f8fb;
+    --surface: #ffffff;
+    --ink: #14202b;
+    --muted: #52616f;
+    --line: #cdd7e1;
+    --error: #b3261e;
+    --error-tint: #fdeceb;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--page);
+    color: var(--ink);
+    font: 17px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", Arial, sans-serif;
+  }
+  .wrap { max-width: 640px; margin: 0 auto; padding: 0 16px; }
+
+  /* Kichwa */
+  .masthead { background: var(--surface); border-bottom: 6px solid var(--green); }
+  .masthead .wrap { padding-top: 24px; padding-bottom: 26px; }
+  .logo { display: block; height: 104px; width: auto; margin: 0 0 20px; }
+  .event { margin: 0 0 6px; font-size: 15px; font-weight: 600; color: #3f7d24; }
+  h1 { margin: 0; font-size: 30px; line-height: 1.15; font-weight: 800; letter-spacing: -0.01em; color: var(--brand-deep); }
+  .intro { margin: 14px 0 0; font-size: 17px; color: var(--muted); }
+  .intro strong { color: var(--ink); display: block; margin-bottom: 4px; }
+
+  .privacy {
+    margin: 20px 0 0; padding: 14px 16px; background: var(--surface);
+    border-left: 5px solid var(--green); border-radius: 0 8px 8px 0; font-weight: 600;
+  }
+  .howto { margin: 12px 0 0; color: var(--muted); font-size: 15.5px; }
+
+  /* Maendeleo */
+  .progress {
+    position: sticky; top: 0; z-index: 5; background: var(--page);
+    padding: 10px 0 8px; margin-top: 14px; border-bottom: 1px solid var(--line);
+  }
+  .progress-text { font-size: 14px; color: var(--muted); margin-bottom: 6px; }
+  .bar { height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; }
+  .bar-fill { height: 100%; width: 0; background: var(--green); transition: width .25s ease; }
+
+  /* Sehemu na maswali */
+  .section-title {
+    margin: 34px 0 0; padding-bottom: 8px; font-size: 21px; line-height: 1.25; font-weight: 800;
+    color: var(--brand-deep); border-bottom: 3px solid var(--green);
+  }
+  .section-note { margin: 10px 0 0; color: var(--muted); }
+  fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+  .q { margin-top: 26px; scroll-margin-top: 70px; }
+  .q-text { display: block; padding: 0; font-size: 18px; line-height: 1.35; font-weight: 700; }
+  .q-if { font-weight: 400; font-style: italic; color: var(--muted); }
+  .q-hint { margin: 4px 0 0; font-size: 15px; color: var(--muted); }
+  .q-error { display: none; margin: 8px 0 0; padding: 8px 12px; border-radius: 6px; background: var(--error-tint); color: var(--error); font-size: 15px; font-weight: 600; }
+  .q.invalid .q-error { display: block; }
+  .q.invalid .q-text { color: var(--error); }
+
+  /* Chaguo (radio / checkbox) */
+  .opts { margin-top: 12px; display: grid; gap: 8px; }
+  .opt { position: relative; display: block; cursor: pointer; }
+  .opt input { position: absolute; left: 14px; top: 50%; width: 22px; height: 22px; margin: -11px 0 0; accent-color: var(--brand); }
+  .opt span {
+    display: block; min-height: 52px; padding: 13px 14px 13px 50px;
+    background: var(--surface); border: 1.5px solid var(--line); border-radius: 10px;
+  }
+  .opt input:checked + span { border-color: var(--brand); background: var(--tint); font-weight: 600; }
+  .opt input:focus-visible + span { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+  /* Viwango (1-5 na 0-10) */
+  .nums { margin-top: 12px; display: grid; gap: 8px; }
+  .nums.five { grid-template-columns: repeat(5, 1fr); }
+  .nums.eleven { grid-template-columns: repeat(6, 1fr); }
+  .num { position: relative; display: block; cursor: pointer; }
+  .num input { position: absolute; opacity: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+  .num span {
+    display: flex; align-items: center; justify-content: center; height: 52px;
+    background: var(--surface); border: 1.5px solid var(--line); border-radius: 10px;
+    font-size: 19px; font-weight: 700; font-variant-numeric: tabular-nums;
+  }
+  .num input:checked + span { background: var(--brand); border-color: var(--brand); color: #fff; }
+  .num input:focus-visible + span { outline: 3px solid var(--accent); outline-offset: 2px; }
+  .ends { display: flex; justify-content: space-between; gap: 12px; margin-top: 6px; font-size: 14px; color: var(--muted); }
+  .ends span:last-child { text-align: right; }
+  .picked:empty { display: none; }
+  .picked { margin-top: 6px; font-size: 15.5px; font-weight: 600; color: var(--brand-deep); }
+
+  /* Jedwali la swali la 6 */
+  .matrix-item { margin-top: 14px; padding: 14px; background: var(--surface); border: 1.5px solid var(--line); border-radius: 10px; }
+  .matrix-item.invalid { border-color: var(--error); }
+  .matrix-label { float: left; width: 100%; padding: 0; font-weight: 600; } /* float huweka legend ndani ya kisanduku */
+  .matrix-label + div { clear: both; }
+  .matrix-item .nums { padding-top: 10px; margin-top: 0; }
+  .matrix-item .num span { background: var(--page); }
+  .matrix-item .num input:checked + span { background: var(--brand); }
+
+  /* Maandishi */
+  .field { margin-top: 12px; }
+  textarea, input[type=text], input[type=tel] {
+    display: block; width: 100%; padding: 13px 14px; font: inherit; color: var(--ink);
+    background: var(--surface); border: 1.5px solid var(--line); border-radius: 10px;
+  }
+  textarea { min-height: 120px; resize: vertical; }
+  textarea:focus, input[type=text]:focus, input[type=tel]:focus { outline: 3px solid var(--accent); outline-offset: 1px; border-color: var(--brand); }
+  .other { margin-top: 8px; }
+  .other label { display: block; font-size: 15px; color: var(--muted); margin-bottom: 4px; }
+  .optional { font-weight: 400; color: var(--muted); }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+  /* Kutuma */
+  .send { margin: 34px 0 0; }
+  .send-error { display: none; margin-bottom: 12px; padding: 12px 14px; border-radius: 8px; background: var(--error-tint); color: var(--error); font-weight: 600; }
+  .send-error.show { display: block; }
+  button.primary {
+    display: block; width: 100%; min-height: 56px; padding: 14px 20px; border: 0; border-radius: 10px;
+    background: var(--brand); color: #fff; font: inherit; font-size: 19px; font-weight: 700; cursor: pointer;
+  }
+  button.primary:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+  button.primary[disabled] { opacity: .65; cursor: progress; }
+  footer { margin: 28px 0 40px; font-size: 14px; color: var(--muted); text-align: center; }
+
+  /* Asante */
+  .done { padding: 56px 0 40px; text-align: center; }
+  .done-mark { width: 72px; height: 72px; margin: 0 auto 20px; border-radius: 50%; background: var(--brand); color: #fff; font-size: 40px; line-height: 72px; }
+  .done h2 { margin: 0 0 10px; font-size: 26px; line-height: 1.2; color: var(--brand-deep); }
+  .done p { margin: 0 0 26px; color: var(--muted); }
+  button.secondary { min-height: 48px; padding: 10px 20px; border: 1.5px solid var(--brand); border-radius: 10px; background: transparent; color: var(--brand); font: inherit; font-weight: 600; cursor: pointer; }
+
+  [hidden] { display: none !important; }
+  @media (max-width: 380px) {
+    body { font-size: 16px; }
+    h1 { font-size: 26px; }
+    .nums { gap: 6px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .bar-fill { transition: none; } }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <img class="logo" src="logo.png" alt="Victoria Finance" width="115" height="104" onerror="this.remove()">
+    <p class="event" id="event"></p>
+    <h1 id="title"></h1>
+    <p class="intro" id="intro"></p>
+  </div>
+</header>
+
+<main class="wrap">
+  <div id="form-view">
+    <p class="privacy" id="privacy"></p>
+    <p class="howto">Gusa jibu linalolingana nawe. Kwa maswali ya viwango, chagua namba moja kuanzia 1 (sijaridhika kabisa) hadi 5 (nimeridhika sana).</p>
+
+    <div class="progress" aria-hidden="true">
+      <div class="progress-text" id="progress-text"></div>
+      <div class="bar"><div class="bar-fill" id="bar-fill"></div></div>
+    </div>
+
+    <form id="survey" novalidate>
+      <div id="questions"></div>
+      <div class="hp" aria-hidden="true">
+        <label>Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+      </div>
+      <div class="send">
+        <div class="send-error" id="send-error" role="alert"></div>
+        <button class="primary" type="submit" id="send-btn">Tuma majibu</button>
+      </div>
+    </form>
+    <footer>Victoria Finance PLC</footer>
+  </div>
+
+  <div id="done-view" class="done" hidden>
+    <div class="done-mark" aria-hidden="true">✓</div>
+    <h2 id="thanks" tabindex="-1"></h2>
+    <p>Majibu yako yamepokelewa.</p>
+    <button class="secondary" type="button" onclick="location.reload()">Jaza fomu nyingine</button>
+  </div>
+</main>
+
+<noscript><p style="padding:16px">Tafadhali washa JavaScript kwenye kivinjari chako ili kujaza fomu hii.</p></noscript>
+
+<script src="survey-config.js"></script>
+<script>
+(function () {
+  var S = window.SURVEY;
+  var MSG = {
+    required: 'Tafadhali jibu swali hili.',
+    matrix: 'Tafadhali chagua kiwango kwa kila kipengele.',
+    phone: 'Namba ya simu si sahihi. Mfano: 0712 345 678',
+    fix: 'Baadhi ya maswali hayajajibiwa. Tafadhali yakamilishe kisha utume tena.',
+    network: 'Majibu hayajatumwa. Angalia mtandao wako kisha gusa "Tuma majibu" tena. Majibu yako bado yapo.',
+    server: 'Majibu hayajatumwa kwa sababu ya hitilafu ya mfumo. Tafadhali jaribu tena baada ya muda mfupi.',
+    sending: 'Inatuma…',
+    send: 'Tuma majibu',
+    multi: 'Chagua zote zinazohusika.',
+    optional: '(hiari)',
+    specify: 'Tafadhali taja',
+    ifYes: 'Kama ndiyo:'
+  };
+
+  var questions = [];
+  S.sections.forEach(function (s) { s.questions.forEach(function (q) { questions.push(q); }); });
+
+  function el(tag, attrs, children) {
+    var node = document.createElement(tag);
+    Object.keys(attrs || {}).forEach(function (k) {
+      if (k === 'text') node.textContent = attrs[k];
+      else if (k === 'class') node.className = attrs[k];
+      else node.setAttribute(k, attrs[k]);
+    });
+    (children || []).forEach(function (c) { if (c) node.appendChild(c); });
+    return node;
+  }
+
+  /* ---------- Kichwa ---------- */
+  document.getElementById('event').textContent = S.event + ', ' + S.date;
+  document.getElementById('title').textContent = S.title;
+  var intro = document.getElementById('intro');
+  intro.appendChild(el('strong', { text: S.intro[0] }));
+  intro.appendChild(document.createTextNode(S.intro[1]));
+  document.getElementById('privacy').textContent = S.privacy;
+  document.getElementById('thanks').textContent = S.thanks;
+
+  /* ---------- Kujenga maswali ---------- */
+  function option(type, name, value, label) {
+    return el('label', { class: 'opt' }, [
+      el('input', { type: type, name: name, value: value }),
+      el('span', { text: label })
+    ]);
+  }
+
+  function numberRow(name, from, to, cls) {
+    var row = el('div', { class: 'nums ' + cls });
+    for (var i = from; i <= to; i++) {
+      var input = el('input', { type: 'radio', name: name, value: String(i) });
+      if (cls === 'five') input.setAttribute('aria-label', i + ', ' + S.scaleLabels[i - 1]);
+      row.appendChild(el('label', { class: 'num' }, [input, el('span', { text: String(i) })]));
+    }
+    return row;
+  }
+
+  function scaleBlock(name) {
+    var picked = el('div', { class: 'picked', 'aria-live': 'polite' });
+    var block = el('div', {}, [
+      numberRow(name, 1, 5, 'five'),
+      el('div', { class: 'ends' }, [
+        el('span', { text: '1 = ' + S.scaleLabels[0] }),
+        el('span', { text: '5 = ' + S.scaleLabels[4] })
+      ]),
+      picked
+    ]);
+    block.addEventListener('change', function (e) {
+      picked.textContent = e.target.value + ': ' + S.scaleLabels[e.target.value - 1];
+    });
+    return block;
+  }
+
+  function buildQuestion(q) {
+    var isText = q.type === 'text' || q.type === 'name' || q.type === 'phone';
+    var box = el(isText ? 'div' : 'fieldset', { class: 'q', id: 'box-' + q.id });
+
+    var title = el(isText ? 'label' : 'legend', { class: 'q-text' });
+    if (isText) title.setAttribute('for', q.id);
+    title.appendChild(document.createTextNode(q.n + '. '));
+    if (q.showIf) title.appendChild(el('span', { class: 'q-if', text: MSG.ifYes + ' ' }));
+    title.appendChild(document.createTextNode(q.text));
+    if (!q.required) title.appendChild(el('span', { class: 'optional', text: ' ' + MSG.optional }));
+    box.appendChild(title);
+
+    if (q.type === 'multi') box.appendChild(el('p', { class: 'q-hint', text: MSG.multi }));
+
+    if (q.type === 'single' || q.type === 'multi' || q.type === 'yesno') {
+      var opts = el('div', { class: 'opts' });
+      var list = q.type === 'yesno' ? [S.no, S.yes] : q.options;
+      list.forEach(function (o) {
+        opts.appendChild(option(q.type === 'multi' ? 'checkbox' : 'radio', q.id, o, o));
+      });
+      box.appendChild(opts);
+      if (q.other) {
+        var other = el('div', { class: 'other', id: 'other-' + q.id, hidden: '' }, [
+          el('label', { for: q.id + '_other', text: MSG.specify + ' ' + MSG.optional }),
+          el('input', { type: 'text', id: q.id + '_other', name: q.id + '_other', maxlength: '120', autocomplete: 'off' })
+        ]);
+        box.appendChild(other);
+      }
+    } else if (q.type === 'scale') {
+      box.appendChild(scaleBlock(q.id));
+    } else if (q.type === 'nps') {
+      box.appendChild(numberRow(q.id, 0, 10, 'eleven'));
+      box.appendChild(el('div', { class: 'ends' }, [
+        el('span', { text: q.lowLabel }), el('span', { text: q.highLabel })
+      ]));
+    } else if (q.type === 'matrix') {
+      q.items.forEach(function (item) {
+        box.appendChild(el('fieldset', { class: 'matrix-item', id: 'box-' + q.id + '_' + item.id }, [
+          el('legend', { class: 'matrix-label', text: item.text }),
+          scaleBlock(q.id + '_' + item.id)
+        ]));
+      });
+    } else if (q.type === 'text') {
+      box.appendChild(el('div', { class: 'field' }, [
+        el('textarea', { id: q.id, name: q.id, maxlength: '2000', rows: '4' })
+      ]));
+    } else if (q.type === 'name') {
+      box.appendChild(el('div', { class: 'field' }, [
+        el('input', { type: 'text', id: q.id, name: q.id, maxlength: '120', autocomplete: 'name' })
+      ]));
+    } else if (q.type === 'phone') {
+      box.appendChild(el('div', { class: 'field' }, [
+        el('input', { type: 'tel', id: q.id, name: q.id, maxlength: '30', inputmode: 'tel', autocomplete: 'tel', placeholder: '0712 345 678' })
+      ]));
+    }
+
+    box.appendChild(el('p', { class: 'q-error', id: 'err-' + q.id, role: 'alert' }));
+    return box;
+  }
+
+  var host = document.getElementById('questions');
+  S.sections.forEach(function (s) {
+    host.appendChild(el('h2', { class: 'section-title', text: s.title }));
+    if (s.note) host.appendChild(el('p', { class: 'section-note', text: s.note }));
+    s.questions.forEach(function (q) { host.appendChild(buildQuestion(q)); });
+  });
+
+  /* ---------- Kusoma majibu ---------- */
+  var form = document.getElementById('survey');
+
+  function radio(name) {
+    var c = form.querySelector('input[name="' + name + '"]:checked');
+    return c ? c.value : null;
+  }
+  function checks(name) {
+    return Array.prototype.map.call(form.querySelectorAll('input[name="' + name + '"]:checked'), function (c) { return c.value; });
+  }
+  function text(id) { return document.getElementById(id).value.trim(); }
+
+  function shown(q, answers) {
+    return !q.showIf || answers[q.showIf.id] === q.showIf.equals;
+  }
+
+  /* Returns { answers, missing: [{id, msg, target}] } */
+  function collect() {
+    var a = {}, missing = [];
+    questions.forEach(function (q) {
+      if (!shown(q, a)) return;
+      var v, bad = false, msg = MSG.required, target = null;
+
+      if (q.type === 'single' || q.type === 'yesno') {
+        v = radio(q.id); if (v) a[q.id] = v; else bad = true;
+      } else if (q.type === 'multi') {
+        v = checks(q.id); if (v.length) a[q.id] = v; else bad = true;
+        if (q.other && v.indexOf(q.other) !== -1) a[q.id + '_other'] = text(q.id + '_other');
+      } else if (q.type === 'scale' || q.type === 'nps') {
+        v = radio(q.id); if (v !== null) a[q.id] = Number(v); else bad = true;
+      } else if (q.type === 'matrix') {
+        a[q.id] = {};
+        q.items.forEach(function (item) {
+          var r = radio(q.id + '_' + item.id);
+          var itemBox = document.getElementById('box-' + q.id + '_' + item.id);
+          if (r !== null) a[q.id][item.id] = Number(r);
+          else { bad = true; msg = MSG.matrix; if (!target) target = itemBox; }
+          itemBox.dataset.missing = r === null ? '1' : '';
+        });
+      } else if (q.type === 'phone') {
+        v = text(q.id);
+        if (v) {
+          var digits = v.replace(/\D/g, '');
+          if (/^\+?[\d\s()-]+$/.test(v) && digits.length >= 9 && digits.length <= 15) a[q.id] = v;
+          else { missing.push({ id: q.id, msg: MSG.phone }); return; }
+        } else bad = true;
+      } else {
+        v = text(q.id); if (v) a[q.id] = v; else bad = true;
+      }
+
+      if (bad && q.required) missing.push({ id: q.id, msg: msg, target: target });
+    });
+    return { answers: a, missing: missing };
+  }
+
+  /* ---------- Maswali ya 8 na 9, "Nyingine", maendeleo ---------- */
+  var showErrors = false;
+
+  function refresh() {
+    var state = collect();
+
+    questions.forEach(function (q) {
+      var box = document.getElementById('box-' + q.id);
+      if (q.showIf) {
+        var visible = shown(q, state.answers);
+        if (box.hidden === visible) {
+          box.hidden = !visible;
+          if (!visible) { // jibu limebadilika kuwa "Hapana": futa majibu ya swali lililofichwa
+            Array.prototype.forEach.call(box.querySelectorAll('input'), function (i) {
+              if (i.type === 'text') i.value = ''; else i.checked = false;
+            });
+          }
+        }
+      }
+      if (q.other) {
+        document.getElementById('other-' + q.id).hidden = !(state.answers[q.id] && state.answers[q.id].indexOf(q.other) !== -1);
+      }
+    });
+
+    var required = questions.filter(function (q) { return q.required && shown(q, state.answers); });
+    var missingIds = state.missing.map(function (m) { return m.id; });
+    var answered = required.filter(function (q) { return missingIds.indexOf(q.id) === -1; }).length;
+    document.getElementById('progress-text').textContent = 'Umejibu maswali ' + answered + ' kati ya ' + required.length;
+    document.getElementById('bar-fill').style.width = (required.length ? Math.round(answered / required.length * 100) : 0) + '%';
+
+    if (showErrors) paintErrors(state.missing);
+    return state;
+  }
+
+  function paintErrors(missing) {
+    questions.forEach(function (q) {
+      var box = document.getElementById('box-' + q.id);
+      var m = missing.filter(function (x) { return x.id === q.id; })[0];
+      box.classList.toggle('invalid', !!m);
+      document.getElementById('err-' + q.id).textContent = m ? m.msg : '';
+      if (q.type === 'matrix') {
+        q.items.forEach(function (item) {
+          var ib = document.getElementById('box-' + q.id + '_' + item.id);
+          ib.classList.toggle('invalid', !!m && ib.dataset.missing === '1');
+        });
+      }
+    });
+  }
+
+  form.addEventListener('change', refresh);
+  form.addEventListener('input', function (e) { if (e.target.type === 'tel' || e.target.type === 'text' || e.target.tagName === 'TEXTAREA') refresh(); });
+  refresh();
+
+  /* ---------- Kutuma ---------- */
+  var btn = document.getElementById('send-btn');
+  var sendError = document.getElementById('send-error');
+
+  function fail(message) {
+    sendError.textContent = message;
+    sendError.classList.add('show');
+    btn.disabled = false;
+    btn.textContent = MSG.send;
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    showErrors = true;
+    sendError.classList.remove('show');
+    var state = refresh();
+
+    if (state.missing.length) {
+      var first = state.missing[0];
+      var target = first.target || document.getElementById('box-' + first.id);
+      target.scrollIntoView({ block: 'start', behavior: 'smooth' });
+      var focusable = target.querySelector('input, textarea');
+      if (focusable) focusable.focus({ preventScroll: true });
+      sendError.textContent = MSG.fix;
+      sendError.classList.add('show');
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = MSG.sending;
+
+    fetch('/api/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ answers: state.answers, website: form.elements.website.value })
+    }).then(function (r) {
+      return r.json().catch(function () { return {}; }).then(function (data) {
+        if (r.ok && data.ok) {
+          document.getElementById('form-view').hidden = true;
+          document.getElementById('done-view').hidden = false;
+          window.scrollTo(0, 0);
+          document.getElementById('thanks').focus();
+        } else if (r.status === 422) {
+          fail(MSG.fix);
+        } else {
+          fail(MSG.server);
+        }
+      });
+    }).catch(function () { fail(MSG.network); });
+  });
+})();
+</script>
+</body>
+</html>

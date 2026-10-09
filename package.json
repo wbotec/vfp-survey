@@ -1,0 +1,7 @@
+{
+  "name": "vfp-client-satisfaction-survey",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Victoria Finance - Utafiti wa Kuridhika kwa Wateja (Wiki ya Huduma kwa Wateja 2026)",
+  "engines": { "node": ">=18" }
+}
