@@ -12,7 +12,7 @@
  *
  * Ukibadilisha msimbo huu baadaye: Deploy > Manage deployments > Edit > Version: New version.
  */
-var SECRET = 'BADILISHA-NENO-HILI-LA-SIRI';
+var SECRET = 'ndalami02134717';
 var SHEET_NAME = 'Majibu';
 
 function doPost(e) {
